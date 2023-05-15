@@ -1,0 +1,7 @@
+{
+  "short_name": "mzcalc",
+  "name": "Marwan calculator",
+  "start_url": "/",
+  "background_color": "#fafafa",
+  "theme_color": "#fafafa"
+}
