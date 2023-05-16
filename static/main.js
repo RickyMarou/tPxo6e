@@ -7,30 +7,6 @@ numberButtons.forEach((numberButton) => {
   });
 });
 
-document.addEventListener("keydown", (keyboardEvent) => {
-  const { key } = keyboardEvent;
-  switch (key) {
-    case "0":
-    case "1":
-    case "2":
-    case "3":
-    case "4":
-    case "5":
-    case "6":
-    case "7":
-    case "8":
-    case "9":
-      appendNumber(key);
-      break;
-    case "Backspace":
-      popNumber();
-      break;
-    default:
-      console.log(`pressed ${key}`);
-      break;
-  }
-});
-
 function appendNumber(numberStr) {
   displayContent.innerHTML += numberStr;
   adjustDisplaySize();
@@ -53,3 +29,41 @@ function adjustDisplaySize() {
 
   displayContent.style.fontSize = `${fontSize}em`;
 }
+
+function findElementFromKey(key) {
+  const buttons = Array.from(document.querySelectorAll("[data-keys]"));
+  return buttons.find((button) => {
+    const keys = button.dataset.keys?.split(" ");
+    return keys?.includes(key);
+  });
+}
+
+document.addEventListener("keydown", (keyboardEvent) => {
+  const { key } = keyboardEvent;
+  findElementFromKey(key)?.classList.add("active");
+  switch (key) {
+    case "0":
+    case "1":
+    case "2":
+    case "3":
+    case "4":
+    case "5":
+    case "6":
+    case "7":
+    case "8":
+    case "9":
+      appendNumber(key);
+      break;
+    case "Backspace":
+      popNumber();
+      break;
+    default:
+      console.log(`pressed ${key}`);
+      break;
+  }
+});
+
+document.addEventListener("keyup", (keyboardEvent) => {
+  const { key } = keyboardEvent;
+  findElementFromKey(key)?.classList.remove("active");
+});
