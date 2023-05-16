@@ -88,8 +88,16 @@ button {
   background: rgb(128, 123, 123);
 }
 
+.numpad-grid button:active {
+  background: rgb(160, 158, 158);
+}
+
 .numpad-grid .operator {
   background: rgb(255, 159, 10);
+}
+
+.numpad-grid .operator:active {
+  background: rgb(203, 125, 6);
 }
 
 .span-2 {
