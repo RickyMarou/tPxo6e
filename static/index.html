@@ -27,25 +27,25 @@
 
   <body>
     <article class="calculator">
-      <div class="display">0000000</div>
+      <div class="display" id="display"></div>
       <div class="numpad-grid">
-        <button class="span-3 dark">C</button>
-        <button class="operator">÷</button>
-        <button>7</button>
-        <button>8</button>
-        <button>9</button>
-        <button class="operator">×</button>
-        <button>4</button>
-        <button>5</button>
-        <button>6</button>
-        <button class="operator">−</button>
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button class="operator">+</button>
-        <button class="span-2 zero">0</button>
-        <button>,</button>
-        <button class="operator equal">=</button>
+        <button id="reset" class="span-3 dark">C</button>
+        <button data-operator class="operator">÷</button>
+        <button data-number>7</button>
+        <button data-number>8</button>
+        <button data-number>9</button>
+        <button data-operator class="operator">×</button>
+        <button data-number>4</button>
+        <button data-number>5</button>
+        <button data-number>6</button>
+        <button data-operator class="operator">−</button>
+        <button data-number>1</button>
+        <button data-number>2</button>
+        <button data-number>3</button>
+        <button data-operator class="operator">+</button>
+        <button data-number class="span-2 zero">0</button>
+        <button data-number>,</button>
+        <button data-operator class="operator equal">=</button>
       </div>
     </article>
     <script type="module" src="main.js"></script>
