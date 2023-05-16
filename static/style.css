@@ -112,10 +112,6 @@ button {
   grid-column: span 2;
 }
 
-.span-3 {
-  grid-column: span 3;
-}
-
 .zero {
   border-bottom-left-radius: var(--border-radius);
 }

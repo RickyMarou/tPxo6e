@@ -55,6 +55,7 @@ document.addEventListener("keydown", (keyboardEvent) => {
       appendNumber(key);
       break;
     case "Backspace":
+    case "Delete":
       popNumber();
       break;
     default:
