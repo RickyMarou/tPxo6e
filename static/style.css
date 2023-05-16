@@ -18,6 +18,21 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-image: linear-gradient(
+    30deg,
+    hsl(212deg 65% 8%) 0%,
+    hsl(254deg 33% 17%) 16%,
+    hsl(313deg 43% 22%) 25%,
+    hsl(341deg 58% 30%) 33%,
+    hsl(2deg 53% 39%) 39%,
+    hsl(10deg 57% 44%) 44%,
+    hsl(17deg 62% 49%) 49%,
+    hsl(24deg 76% 53%) 54%,
+    hsl(29deg 83% 56%) 60%,
+    hsl(33deg 86% 57%) 66%,
+    hsl(36deg 88% 60%) 74%,
+    hsl(40deg 90% 62%) 93%
+  );
 }
 
 button {
