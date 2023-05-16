@@ -61,7 +61,7 @@ button {
   height: 80px;
   line-height: 80px;
   text-align: right;
-  padding-right: 15px;
+  padding: 0 15px;
   font-size: 40px;
   border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);
