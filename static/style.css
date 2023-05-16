@@ -34,6 +34,7 @@ body {
     hsl(36deg 88% 60%) 74%,
     hsl(40deg 90% 62%) 93%
   );
+  font-size: 16px;
 }
 
 button {
@@ -60,13 +61,18 @@ button {
   background: rgb(87, 80, 80);
   height: 80px;
   line-height: 80px;
-  text-align: right;
   padding: 0 15px;
-  font-size: 40px;
+  font-size: 2.5rem;
   border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);
   font-weight: lighter;
   border-bottom: 1px solid var(--border-color);
+}
+
+.display-content {
+  overflow: hidden;
+  text-align: right;
+  direction: rtl;
 }
 
 .numpad-grid {

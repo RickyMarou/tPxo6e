@@ -1,4 +1,4 @@
-const display = document.getElementById("display");
+const displayContent = document.getElementById("display-content");
 const numberButtons = document.querySelectorAll("[data-number]");
 
 numberButtons.forEach((numberButton) => {
@@ -6,10 +6,6 @@ numberButtons.forEach((numberButton) => {
     appendNumber(event.target.innerHTML);
   });
 });
-
-function appendNumber(numberStr) {
-  display.innerHTML += numberStr;
-}
 
 document.addEventListener("keydown", (keyboardEvent) => {
   const { key } = keyboardEvent;
@@ -32,3 +28,21 @@ document.addEventListener("keydown", (keyboardEvent) => {
       break;
   }
 });
+
+function appendNumber(numberStr) {
+  displayContent.innerHTML += numberStr;
+  adjustDisplaySize();
+}
+
+function adjustDisplaySize() {
+  const contentLength = displayContent.innerHTML.length;
+  if (contentLength <= 8) {
+    displayContent.style.fontSize = undefined;
+    return;
+  }
+
+  const overflowingCharacterCount = contentLength - 8;
+  const fontSize = Math.max(0.3, 1 - overflowingCharacterCount * 0.1);
+
+  displayContent.style.fontSize = `${fontSize}em`;
+}
