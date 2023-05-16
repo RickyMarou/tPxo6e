@@ -1,24 +1,56 @@
+import {
+  appendNumber,
+  popNumber,
+  setOperand,
+  calculate,
+  setOperator,
+  state,
+} from "./calculator.mjs";
+
 const displayContent = document.getElementById("display-content");
 const numberButtons = document.querySelectorAll("[data-number]");
+const operatorButtons = document.querySelectorAll("[data-operator]");
 
 numberButtons.forEach((numberButton) => {
   numberButton.addEventListener("click", (event) => {
-    appendNumber(event.target.innerHTML);
+    handleNumberInput(event.target.innerText);
   });
 });
 
-function appendNumber(numberStr) {
-  displayContent.innerHTML += numberStr;
+operatorButtons.forEach((operatorButton) => {
+  operatorButton.addEventListener("click", (event) => {
+    handleOperator(event.target.dataset.operator);
+  });
+});
+
+function handleNumberInput(numberStr) {
+  console.log({ numberStr });
+  displayContent.innerText = appendNumber(numberStr);
   adjustDisplaySize();
 }
 
-function popNumber() {
-  displayContent.innerHTML = displayContent.innerHTML.slice(0, -1);
+function handleDelete() {
+  displayContent.innerText = popNumber();
   adjustDisplaySize();
+}
+
+function handleOperator(operator) {
+  if (operator === "=") {
+    handleEqual();
+  }
+  // TODO: Safe parseFloat
+  setOperand(parseFloat(displayContent.innerText));
+  displayContent.innerText = setOperator(operator);
+}
+
+function handleEqual() {
+  // TODO: Safe parseFloat
+  setOperand(parseFloat(displayContent.innerText));
+  displayContent.innerText = calculate();
 }
 
 function adjustDisplaySize() {
-  const contentLength = displayContent.innerHTML.length;
+  const contentLength = displayContent.innerText.length;
   if (contentLength <= 8) {
     displayContent.style.fontSize = undefined;
     return;
@@ -52,11 +84,21 @@ document.addEventListener("keydown", (keyboardEvent) => {
     case "7":
     case "8":
     case "9":
-      appendNumber(key);
+      handleNumberInput(key);
       break;
     case "Backspace":
     case "Delete":
-      popNumber();
+      handleDelete();
+      break;
+    case "Enter":
+    case "=":
+      handleEqual();
+      break;
+    case "+":
+    case "-":
+    case "*":
+    case "/":
+      handleOperator(key);
       break;
     default:
       console.log(`pressed ${key}`);

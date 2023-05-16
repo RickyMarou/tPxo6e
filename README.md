@@ -16,3 +16,9 @@
 
 - Design and Accessibility
 - Testability and Readability
+
+### Out of scope
+
+- AC/C functionality, maybe will implement
+- Responsive styles: no needed because the calculator is small enough
+- Percent operation
