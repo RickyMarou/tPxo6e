@@ -22,7 +22,9 @@ document.addEventListener("keydown", (keyboardEvent) => {
     case "9":
       appendNumber(key);
       break;
-
+    case "Backspace":
+      popNumber();
+      break;
     default:
       console.log(`pressed ${key}`);
       break;
@@ -31,6 +33,11 @@ document.addEventListener("keydown", (keyboardEvent) => {
 
 function appendNumber(numberStr) {
   displayContent.innerHTML += numberStr;
+  adjustDisplaySize();
+}
+
+function popNumber() {
+  displayContent.innerHTML = displayContent.innerHTML.slice(0, -1);
   adjustDisplaySize();
 }
 
