@@ -51,3 +51,32 @@ export function display({ firstOperand, secondOperand, operator }) {
 
   return firstOperand || "0";
 }
+
+/**
+ * @param {CalculatorState} state
+ * @returns {CalculatorState}
+ */
+export function deleteNumber({ firstOperand, secondOperand, operator }) {
+  const newState = {
+    firstOperand,
+    secondOperand,
+    operator,
+  };
+
+  if (operator) {
+    if (secondOperand && secondOperand.length > 1) {
+      newState.secondOperand = secondOperand.slice(0, -1);
+    } else {
+      newState.secondOperand = undefined;
+    }
+
+    return newState;
+  }
+
+  if (firstOperand && firstOperand.length > 1) {
+    newState.firstOperand = firstOperand.slice(0, -1);
+  } else {
+    newState.firstOperand = undefined;
+  }
+  return newState;
+}

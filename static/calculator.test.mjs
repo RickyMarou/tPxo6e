@@ -2,7 +2,7 @@
 
 import { test, describe, beforeEach } from "node:test";
 import assert from "node:assert/strict";
-import { appendNumber, display } from "./calculator.mjs";
+import { appendNumber, display, deleteNumber } from "./calculator.mjs";
 
 describe("calculator.mjs", { concurrency: true }, () => {
   describe("appendNumber", { concurrency: true }, () => {
@@ -127,6 +127,76 @@ describe("calculator.mjs", { concurrency: true }, () => {
         display({ firstOperand: "123", operator: "+", secondOperand: "2" }),
         "2"
       );
+    });
+  });
+
+  describe("deleteNumber", { concurrency: true }, () => {
+    describe("when the operator is undefined", { concurrency: true }, () => {
+      test("when the first operand has more than one character, it deletes the last character", () => {
+        assert.deepEqual(deleteNumber({ firstOperand: "123" }), {
+          firstOperand: "12",
+          secondOperand: undefined,
+          operator: undefined,
+        });
+
+        assert.deepEqual(
+          deleteNumber({ firstOperand: "123", secondOperand: "23" }),
+          {
+            firstOperand: "12",
+            secondOperand: "23",
+            operator: undefined,
+          }
+        );
+      });
+
+      test("when the first operand has a single character, it sets it to undefined", () => {
+        assert.deepEqual(deleteNumber({ firstOperand: "2" }), {
+          firstOperand: undefined,
+          secondOperand: undefined,
+          operator: undefined,
+        });
+
+        assert.deepEqual(
+          deleteNumber({ firstOperand: "2", secondOperand: "23" }),
+          {
+            firstOperand: undefined,
+            secondOperand: "23",
+            operator: undefined,
+          }
+        );
+      });
+    });
+
+    describe("when the operator is defined", { concurrency: true }, () => {
+      test("when the second operand has more than one character, it deletes the last character", () => {
+        assert.deepEqual(
+          deleteNumber({
+            firstOperand: "123",
+            secondOperand: "456",
+            operator: "+",
+          }),
+          {
+            firstOperand: "123",
+            secondOperand: "45",
+            operator: "+",
+          }
+        );
+      });
+
+      test("when the second operand has a single character, it sets it to undefined", () => {
+        assert.deepEqual(
+          deleteNumber({
+            firstOperand: "1",
+            secondOperand: "2",
+            operator: "+",
+          }),
+          {
+            firstOperand: "1",
+            secondOperand: undefined,
+            operator: "+",
+          }
+        );
+      });
     });
   });
 });
