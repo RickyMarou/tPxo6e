@@ -1,6 +1,7 @@
 import { appendNumber, display, deleteNumber } from "./calculator.mjs";
 
 const displayContent = document.getElementById("display-content");
+const resetButton = document.getElementById("reset");
 const numberButtons = document.querySelectorAll("[data-number]");
 const operatorButtons = document.querySelectorAll("[data-operator]");
 
@@ -22,6 +23,11 @@ operatorButtons.forEach((operatorButton) => {
   operatorButton.addEventListener("click", (event) => {
     handleOperator(event.target.dataset.operator);
   });
+});
+
+resetButton.addEventListener("click", () => {
+  state = {};
+  updateDisplay();
 });
 
 function handleNumberInput(numberStr) {
@@ -104,6 +110,10 @@ document.addEventListener("keydown", (keyboardEvent) => {
     case "*":
     case "/":
       handleOperator(key);
+      break;
+    case "c":
+      state = {};
+      updateDisplay();
       break;
     default:
       console.log(`pressed ${key}`);
