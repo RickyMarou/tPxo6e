@@ -1,15 +1,16 @@
-import {
-  appendNumber,
-  popNumber,
-  setOperand,
-  calculate,
-  setOperator,
-  state,
-} from "./calculator.mjs";
+import { appendNumber, display } from "./calculator.mjs";
 
 const displayContent = document.getElementById("display-content");
 const numberButtons = document.querySelectorAll("[data-number]");
 const operatorButtons = document.querySelectorAll("[data-operator]");
+
+let state = {
+  firstOperand: undefined,
+  secondOperand: undefined,
+  operator: undefined,
+};
+
+updateDisplay();
 
 numberButtons.forEach((numberButton) => {
   numberButton.addEventListener("click", (event) => {
@@ -24,8 +25,12 @@ operatorButtons.forEach((operatorButton) => {
 });
 
 function handleNumberInput(numberStr) {
-  console.log({ numberStr });
-  displayContent.innerText = appendNumber(numberStr);
+  state = appendNumber({ state, numberStr });
+  updateDisplay();
+}
+
+function updateDisplay() {
+  displayContent.innerText = display(state);
   adjustDisplaySize();
 }
 
