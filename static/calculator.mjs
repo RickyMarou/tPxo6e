@@ -45,8 +45,8 @@ export function appendNumber({ state, numberStr }) {
  * @returns {string}
  */
 export function display({ firstOperand, secondOperand, operator }) {
-  if (firstOperand && operator) {
-    return secondOperand || "0";
+  if (firstOperand && operator && secondOperand) {
+    return secondOperand;
   }
 
   return firstOperand || "0";

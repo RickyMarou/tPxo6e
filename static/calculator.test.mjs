@@ -110,19 +110,26 @@ describe("calculator.mjs", { concurrency: true }, () => {
       );
     });
 
-    test("returns 0 if the first operand and the operator are defined, but the second operand is not", () => {
-      assert.strictEqual(display({ firstOperand: "123", operator: "+" }), "0");
+    test("returns the first operand if the first operand and the operator are defined, but the second operand is not", () => {
+      assert.strictEqual(
+        display({ firstOperand: "123", operator: "+" }),
+        "123"
+      );
       assert.strictEqual(
         display({
           firstOperand: "123",
           operator: "+",
           secondOperand: undefined,
         }),
-        "0"
+        "123"
       );
     });
 
-    test("returns the second operand if the first operand and the operator are defined", () => {
+    test("returns the second operand if the first operand, the operator and second operand are defined", () => {
+      assert.strictEqual(
+        display({ firstOperand: "123", operator: "+", secondOperand: "0" }),
+        "0"
+      );
       assert.strictEqual(
         display({ firstOperand: "123", operator: "+", secondOperand: "2" }),
         "2"
