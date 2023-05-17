@@ -1,44 +1,51 @@
-import { mock, test, describe, beforeEach } from "node:test";
+import { test, describe, beforeEach } from "node:test";
 import assert from "node:assert/strict";
-import { appendNumber, popNumber, state, _mockState } from "./calculator.mjs";
+import { appendNumber } from "./calculator.mjs";
 
-describe("calculator.mjs", () => {
-  describe("_mockState", () => {
-    test("mocks the state", () => {
-      const mockStateData = {
-        firstOperand: "123",
-        secondOperand: "234",
-        operator: "+",
-      };
-      _mockState(mockStateData);
-
-      assert.deepEqual(state, mockStateData);
-    });
-  });
-
-  describe("appendNumber", () => {
-    beforeEach(() => {
-      console.log("before test");
-      _mockState({
-        firstOperand: "0",
-        secondOperand: "0",
-        operator: undefined,
-      });
-    });
-
+describe("calculator.mjs", { concurrency: true }, () => {
+  describe("appendNumber", { concurrency: true }, () => {
     test("replaces the initial 0 with the first input for the first operand", () => {
-      assert.strictEqual(state.operator, undefined);
-      assert.strictEqual(state.secondOperand, "0");
-
-      appendNumber("1");
-      assert.strictEqual(state.firstOperand, "1");
+      const newState = appendNumber({
+        state: {
+          firstOperand: "0",
+          secondOperand: "0",
+          operator: undefined,
+        },
+        numberStr: "1",
+      });
+      assert.strictEqual(newState.firstOperand, "1");
+      assert.strictEqual(newState.secondOperand, "0");
+      assert.strictEqual(newState.operator, undefined);
     });
 
-    test("append number to the first operand if the operator is undefined", () => {
-      _mockState({
-        firstOperand: "123",
-        secondOperand: "0",
+    test("appends number to the first operand if the operator is undefined", () => {
+      const newState = appendNumber({
+        state: {
+          firstOperand: "1",
+          secondOperand: "0",
+          operator: undefined,
+        },
+        numberStr: "2",
       });
+
+      assert.strictEqual(newState.firstOperand, "12");
+      assert.strictEqual(newState.secondOperand, "0");
+      assert.strictEqual(newState.operator, undefined);
+    });
+
+    test("appends number to the second operand if the operator is defined", () => {
+      const newState = appendNumber({
+        state: {
+          firstOperand: "12",
+          secondOperand: "0",
+          operator: "+",
+        },
+        numberStr: "1",
+      });
+
+      assert.strictEqual(newState.firstOperand, "12");
+      assert.strictEqual(newState.secondOperand, "1");
+      assert.strictEqual(newState.operator, "+");
     });
   });
 });
