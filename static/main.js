@@ -1,4 +1,4 @@
-import { appendNumber, display } from "./calculator.mjs";
+import { appendNumber, display, deleteNumber } from "./calculator.mjs";
 
 const displayContent = document.getElementById("display-content");
 const numberButtons = document.querySelectorAll("[data-number]");
@@ -35,8 +35,8 @@ function updateDisplay() {
 }
 
 function handleDelete() {
-  displayContent.innerText = popNumber();
-  adjustDisplaySize();
+  state = deleteNumber(state);
+  updateDisplay();
 }
 
 function handleOperator(operator) {
