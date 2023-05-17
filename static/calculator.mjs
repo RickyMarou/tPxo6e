@@ -39,3 +39,15 @@ export function appendNumber({ state, numberStr }) {
   }
   return newState;
 }
+
+/**
+ * @param {CalculatorState} state
+ * @returns {string}
+ */
+export function display({ firstOperand, secondOperand, operator }) {
+  if (firstOperand && operator) {
+    return secondOperand || "0";
+  }
+
+  return firstOperand || "0";
+}
