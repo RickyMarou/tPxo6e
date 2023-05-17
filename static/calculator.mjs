@@ -3,9 +3,9 @@
 /**
  * The state of the calculator
  * @typedef {Object} CalculatorState
- * @property {string|undefined} firstOperand
- * @property {string|undefined} secondOperand
- * @property {"+"|"/"|"*"|"-"|undefined} operator
+ * @property {string|undefined} [firstOperand]
+ * @property {string|undefined} [secondOperand]
+ * @property {"+"|"/"|"*"|"-"|undefined} [operator]
  */
 
 /**
