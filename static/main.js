@@ -1,4 +1,9 @@
-import { appendNumber, display, deleteNumber } from "./calculator.mjs";
+import {
+  appendNumber,
+  display,
+  deleteNumber,
+  setOperator,
+} from "./calculator.mjs";
 
 const displayContent = document.getElementById("display-content");
 const resetButton = document.getElementById("reset");
@@ -46,18 +51,8 @@ function handleDelete() {
 }
 
 function handleOperator(operator) {
-  if (operator === "=") {
-    handleEqual();
-  }
-  // TODO: Safe parseFloat
-  setOperand(parseFloat(displayContent.innerText));
-  displayContent.innerText = setOperator(operator);
-}
-
-function handleEqual() {
-  // TODO: Safe parseFloat
-  setOperand(parseFloat(displayContent.innerText));
-  displayContent.innerText = calculate();
+  state = setOperator({ state, operator });
+  updateDisplay();
 }
 
 function adjustDisplaySize() {
@@ -103,7 +98,7 @@ document.addEventListener("keydown", (keyboardEvent) => {
       break;
     case "Enter":
     case "=":
-      handleEqual();
+      handleOperator("=");
       break;
     case "+":
     case "-":

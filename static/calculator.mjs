@@ -84,3 +84,64 @@ export function deleteNumber({ firstOperand, secondOperand, operator }) {
   }
   return newState;
 }
+
+/**
+ * @param {{
+ *  state: CalculatorState
+ *  operator: Operator
+ * }} param0
+ * @returns {CalculatorState}
+ */
+export function setOperator({
+  state: { firstOperand, secondOperand, operator },
+  operator: newOperator,
+}) {
+  let newState;
+
+  if (operator || operator === "=") {
+    newState = calculate({ firstOperand, secondOperand, operator });
+  } else {
+    newState = {
+      firstOperand,
+      secondOperand,
+      operator,
+    };
+  }
+
+  newState.operator = newOperator;
+  return newState;
+}
+
+/**
+ * @param {CalculatorState} state
+ * @returns {CalculatorState}
+ */
+export function calculate(state) {
+  const firstOperand = parseFloat(state.firstOperand || "0");
+  const secondOperand = parseFloat(state.secondOperand || "0");
+
+  if (Number.isNaN(firstOperand) || Number.isNaN(secondOperand)) {
+    return state;
+  }
+
+  switch (state.operator) {
+    case "+":
+      return {
+        firstOperand: (firstOperand + secondOperand).toString(),
+      };
+    case "-":
+      return {
+        firstOperand: (firstOperand - secondOperand).toString(),
+      };
+    case "*":
+      return {
+        firstOperand: (firstOperand * secondOperand).toString(),
+      };
+    case "/":
+      return {
+        firstOperand: (firstOperand / secondOperand).toString(),
+      };
+    default:
+      return state;
+  }
+}
