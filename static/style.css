@@ -116,6 +116,10 @@ button {
   background: rgb(203, 125, 6);
 }
 
+.numpad-grid .operator.selected {
+  border: 1px solid #000;
+}
+
 .span-2 {
   grid-column: span 2;
 }

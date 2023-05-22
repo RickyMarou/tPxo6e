@@ -49,6 +49,16 @@ function handleNumberInput(numberStr) {
 
 function updateDisplay() {
   displayContent.innerText = display(state);
+  operatorButtons.forEach((operatorButton) => {
+    if (operatorButton.dataset.operator === "=") {
+      return;
+    }
+
+    operatorButton.classList.toggle(
+      "selected",
+      state.operator === operatorButton.dataset.operator
+    );
+  });
   adjustDisplaySize();
 }
 
