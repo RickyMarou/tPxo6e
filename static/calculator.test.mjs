@@ -7,6 +7,7 @@ import {
   display,
   deleteNumber,
   appendDecimalSeparator,
+  calculate,
 } from "./calculator.mjs";
 
 describe("calculator.mjs", { concurrency: true }, () => {
@@ -304,6 +305,258 @@ describe("calculator.mjs", { concurrency: true }, () => {
             secondOperand: undefined,
             operator: "+",
           }
+        );
+      });
+    });
+  });
+
+  describe("calculate", { concurrency: true }, () => {
+    test("puts the result of the calculation in the first operand and resets secondOperand and operator", () => {
+      assert.deepStrictEqual(
+        calculate({ firstOperand: "1", secondOperand: "1", operator: "+" }),
+        { firstOperand: "2" }
+      );
+    });
+
+    describe(
+      "Integers within Number.MIN_SAFE_INTEGER and Number.MAX_SAFE_INTEGER",
+      { concurrency: true },
+      () => {
+        test("addition", () => {
+          assert.deepStrictEqual(
+            calculate({ firstOperand: "1", secondOperand: "1", operator: "+" }),
+            { firstOperand: "2" }
+          );
+
+          assert.deepStrictEqual(
+            calculate({
+              firstOperand: "-1",
+              secondOperand: "1",
+              operator: "+",
+            }),
+            { firstOperand: "0" }
+          );
+
+          assert.deepStrictEqual(
+            calculate({
+              firstOperand: "-1",
+              secondOperand: "-1",
+              operator: "+",
+            }),
+            { firstOperand: "-2" }
+          );
+        });
+
+        test("subtraction", () => {
+          assert.deepStrictEqual(
+            calculate({ firstOperand: "1", secondOperand: "1", operator: "-" }),
+            { firstOperand: "0" }
+          );
+
+          assert.deepStrictEqual(
+            calculate({
+              firstOperand: "1",
+              secondOperand: "-1",
+              operator: "-",
+            }),
+            { firstOperand: "2" }
+          );
+
+          assert.deepStrictEqual(
+            calculate({
+              firstOperand: "-1",
+              secondOperand: "1",
+              operator: "-",
+            }),
+            { firstOperand: "-2" }
+          );
+
+          assert.deepStrictEqual(
+            calculate({
+              firstOperand: "-1",
+              secondOperand: "-1",
+              operator: "-",
+            }),
+            { firstOperand: "0" }
+          );
+
+          assert.deepStrictEqual(
+            calculate({
+              firstOperand: "Infinity",
+              secondOperand: "1",
+              operator: "-",
+            }),
+            { firstOperand: "Infinity" }
+          );
+        });
+
+        test("multiplication", () => {
+          assert.deepStrictEqual(
+            calculate({ firstOperand: "1", secondOperand: "1", operator: "*" }),
+            { firstOperand: "1" }
+          );
+
+          assert.deepStrictEqual(
+            calculate({
+              firstOperand: "2",
+              secondOperand: "2",
+              operator: "*",
+            }),
+            { firstOperand: "4" }
+          );
+
+          assert.deepStrictEqual(
+            calculate({
+              firstOperand: "-1",
+              secondOperand: "1",
+              operator: "*",
+            }),
+            { firstOperand: "-1" }
+          );
+
+          assert.deepStrictEqual(
+            calculate({
+              firstOperand: "-1",
+              secondOperand: "-1",
+              operator: "*",
+            }),
+            { firstOperand: "1" }
+          );
+        });
+
+        test("division", () => {
+          assert.deepStrictEqual(
+            calculate({ firstOperand: "1", secondOperand: "1", operator: "/" }),
+            { firstOperand: "1" }
+          );
+
+          assert.deepStrictEqual(
+            calculate({
+              firstOperand: "4",
+              secondOperand: "2",
+              operator: "/",
+            }),
+            { firstOperand: "2" }
+          );
+
+          assert.deepStrictEqual(
+            calculate({
+              firstOperand: "-4",
+              secondOperand: "2",
+              operator: "/",
+            }),
+            { firstOperand: "-2" }
+          );
+
+          assert.deepStrictEqual(
+            calculate({
+              firstOperand: "-4",
+              secondOperand: "-2",
+              operator: "/",
+            }),
+            { firstOperand: "2" }
+          );
+        });
+      }
+    );
+
+    describe("works with Infinity", { concurrency: true }, () => {
+      test("addition", () => {
+        assert.deepStrictEqual(
+          calculate({
+            firstOperand: "Infinity",
+            secondOperand: "1",
+            operator: "+",
+          }),
+          { firstOperand: "Infinity" }
+        );
+      });
+
+      test("subtraction", () => {
+        assert.deepStrictEqual(
+          calculate({
+            firstOperand: "Infinity",
+            secondOperand: "1",
+            operator: "-",
+          }),
+          { firstOperand: "Infinity" }
+        );
+      });
+
+      test("multiplication", () => {
+        assert.deepStrictEqual(
+          calculate({
+            firstOperand: "Infinity",
+            secondOperand: "2",
+            operator: "*",
+          }),
+          { firstOperand: "Infinity" }
+        );
+      });
+
+      test("division", () => {
+        assert.deepStrictEqual(
+          calculate({
+            firstOperand: "Infinity",
+            secondOperand: "2",
+            operator: "/",
+          }),
+          { firstOperand: "Infinity" }
+        );
+
+        assert.deepStrictEqual(
+          calculate({
+            firstOperand: "Infinity",
+            secondOperand: "0",
+            operator: "/",
+          }),
+          { firstOperand: "Infinity" }
+        );
+      });
+    });
+
+    describe("Floating point numbers", { concurrency: true }, () => {
+      test("addition", () => {
+        assert.deepStrictEqual(
+          calculate({
+            firstOperand: "1",
+            secondOperand: "0,02",
+            operator: "+",
+          }),
+          { firstOperand: "1,02" }
+        );
+      });
+
+      test("subtraction", () => {
+        assert.deepStrictEqual(
+          calculate({
+            firstOperand: "1",
+            secondOperand: "0,02",
+            operator: "-",
+          }),
+          { firstOperand: "0,98" }
+        );
+      });
+
+      test("multiplication", () => {
+        assert.deepStrictEqual(
+          calculate({
+            firstOperand: "2",
+            secondOperand: "0,02",
+            operator: "*",
+          }),
+          { firstOperand: "0,04" }
+        );
+      });
+
+      test("division", () => {
+        assert.deepStrictEqual(
+          calculate({
+            firstOperand: "0,02",
+            secondOperand: "2",
+            operator: "/",
+          }),
+          { firstOperand: "0,01" }
         );
       });
     });

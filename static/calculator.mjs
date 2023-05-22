@@ -149,8 +149,10 @@ export function setOperator({
  * @returns {CalculatorState}
  */
 export function calculate(state) {
-  const firstOperand = parseFloat(state.firstOperand || "0");
-  const secondOperand = parseFloat(state.secondOperand || "0");
+  const firstOperand = parseFloat(state.firstOperand?.replace(",", ".") || "0");
+  const secondOperand = parseFloat(
+    state.secondOperand?.replace(",", ".") || "0"
+  );
 
   if (Number.isNaN(firstOperand) || Number.isNaN(secondOperand)) {
     return state;
@@ -159,21 +161,29 @@ export function calculate(state) {
   switch (state.operator) {
     case "+":
       return {
-        firstOperand: (firstOperand + secondOperand).toString(),
+        firstOperand: format(firstOperand + secondOperand),
       };
     case "-":
       return {
-        firstOperand: (firstOperand - secondOperand).toString(),
+        firstOperand: format(firstOperand - secondOperand),
       };
     case "*":
       return {
-        firstOperand: (firstOperand * secondOperand).toString(),
+        firstOperand: format(firstOperand * secondOperand),
       };
     case "/":
       return {
-        firstOperand: (firstOperand / secondOperand).toString(),
+        firstOperand: format(firstOperand / secondOperand),
       };
     default:
       return state;
+  }
+
+  function format(number) {
+    console.log({ number });
+    if (number === Infinity) {
+      return "Infinity";
+    }
+    return new Intl.NumberFormat("de").format(number);
   }
 }
