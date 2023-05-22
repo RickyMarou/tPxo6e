@@ -70,7 +70,7 @@ function adjustDisplaySize() {
   }
 
   const overflowingCharacterCount = contentLength - 8;
-  const fontSize = Math.max(0.3, 1 - overflowingCharacterCount * 0.1);
+  const fontSize = Math.max(0.3, 1 - overflowingCharacterCount * 0.07);
 
   displayContent.style.fontSize = `${fontSize}em`;
 }
