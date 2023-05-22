@@ -114,6 +114,7 @@ document.addEventListener("keydown", (keyboardEvent) => {
       handleOperator(key);
       break;
     case "c":
+    case "Escape":
       state = {};
       updateDisplay();
       break;
