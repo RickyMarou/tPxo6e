@@ -180,10 +180,20 @@ export function calculate(state) {
   }
 
   function format(number) {
-    console.log({ number });
     if (number === Infinity) {
       return "Infinity";
     }
-    return new Intl.NumberFormat("de").format(number);
+
+    const formattedNumber = new Intl.NumberFormat("de")
+      .format(number)
+      .replace(/\./g, "");
+
+    if (formattedNumber.length > 29) {
+      return new Intl.NumberFormat("de", { notation: "scientific" })
+        .format(number)
+        .replace(/\./g, "");
+    }
+
+    return formattedNumber;
   }
 }
