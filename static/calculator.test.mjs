@@ -580,4 +580,83 @@ describe("calculator.mjs", { concurrency: true }, () => {
   });
 });
 
+describe("integration", { concurrency: true }, () => {
+  /**
+   * @type {import('./calculator.mjs').CalculatorState}
+   */
+  let state = {};
+
+  test("allows setting an initial negative operand", () => {
+    state = setOperator({ state, operator: "-" });
+    assert.deepEqual(display(state), "0");
+
+    state = appendNumber({ state, numberStr: "4" });
+    assert.deepEqual(display(state), "4");
+
+    state = setOperator({ state, operator: "=" });
+    assert.deepEqual(display(state), "-4");
+  });
+
+  test("adds two positive integers and use the equal operator", () => {
+    state = {};
+    state = appendNumber({ state, numberStr: "1" });
+    state = appendNumber({ state, numberStr: "2" });
+    state = appendNumber({ state, numberStr: "3" });
+    assert.deepEqual(display(state), "123");
+
+    state = setOperator({ state, operator: "+" });
+    assert.deepEqual(display(state), "123");
+
+    state = appendNumber({ state, numberStr: "2" });
+    assert.deepEqual(state, {
+      firstOperand: "123",
+      secondOperand: "2",
+      operator: "+",
+    });
+    assert.deepEqual(display(state), "2");
+
+    state = setOperator({ state, operator: "=" });
+    assert.deepEqual(display(state), "125");
+  });
+
+  test("does multiples operations in a row on integers", () => {
+    //  ((((5 + 1) / 2) - 6) * 2) + 6 = 0
+    state = {};
+
+    state = appendNumber({ state, numberStr: "5" });
+    assert.deepEqual(display(state), "5");
+
+    state = setOperator({ state, operator: "+" });
+    assert.deepEqual(display(state), "5");
+
+    state = appendNumber({ state, numberStr: "1" });
+    assert.deepEqual(display(state), "1");
+
+    state = setOperator({ state, operator: "/" });
+    assert.deepEqual(display(state), "6");
+
+    state = appendNumber({ state, numberStr: "2" });
+    assert.deepEqual(display(state), "2");
+
+    state = setOperator({ state, operator: "-" });
+    assert.deepEqual(display(state), "3");
+
+    state = appendNumber({ state, numberStr: "6" });
+    assert.deepEqual(display(state), "6");
+
+    state = setOperator({ state, operator: "*" });
+    assert.deepEqual(display(state), "-3");
+
+    state = appendNumber({ state, numberStr: "2" });
+    assert.deepEqual(display(state), "2");
+
+    state = setOperator({ state, operator: "+" });
+    assert.deepEqual(display(state), "-6");
+
+    state = appendNumber({ state, numberStr: "6" });
+    assert.deepEqual(display(state), "6");
+
+    state = setOperator({ state, operator: "=" });
+    assert.deepEqual(display(state), "0");
+  });
 });
