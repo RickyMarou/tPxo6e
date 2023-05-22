@@ -48,7 +48,6 @@ button {
 .calculator {
   width: 235px;
   height: 320px;
-  font-variant-numeric: tabular-nums;
   display: flex;
   flex-direction: column;
   color: #fff;
