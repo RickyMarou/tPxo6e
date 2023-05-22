@@ -131,10 +131,14 @@ export function setOperator({
   let newState;
 
   if (operator || operator === "=") {
-    newState = calculate({ firstOperand, secondOperand, operator });
+    newState = calculate({
+      firstOperand: firstOperand ?? "0",
+      secondOperand,
+      operator,
+    });
   } else {
     newState = {
-      firstOperand,
+      firstOperand: firstOperand ?? "0",
       secondOperand,
       operator,
     };

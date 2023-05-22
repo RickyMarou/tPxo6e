@@ -7,6 +7,7 @@ import {
   display,
   deleteNumber,
   appendDecimalSeparator,
+  setOperator,
   calculate,
 } from "./calculator.mjs";
 
@@ -561,4 +562,22 @@ describe("calculator.mjs", { concurrency: true }, () => {
       });
     });
   });
+
+  describe("setOperator", { concurrency: true }, () => {
+    test("defaults firstOperand to 0 if it's not defined", () => {
+      assert.deepStrictEqual(setOperator({ state: {}, operator: "+" }), {
+        firstOperand: "0",
+        secondOperand: undefined,
+        operator: "+",
+      });
+
+      assert.deepStrictEqual(setOperator({ state: {}, operator: "=" }), {
+        firstOperand: "0",
+        secondOperand: undefined,
+        operator: "=",
+      });
+    });
+  });
+});
+
 });
