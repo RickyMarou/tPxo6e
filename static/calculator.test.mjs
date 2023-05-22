@@ -577,6 +577,19 @@ describe("calculator.mjs", { concurrency: true }, () => {
         operator: "=",
       });
     });
+
+    test("calculates the result if there is a pre-existing operator", () => {
+      assert.deepStrictEqual(
+        setOperator({
+          state: { firstOperand: "1", secondOperand: "1", operator: "+" },
+          operator: "+",
+        }),
+        {
+          firstOperand: "2",
+          operator: "+",
+        }
+      );
+    });
   });
 });
 
@@ -658,5 +671,18 @@ describe("integration", { concurrency: true }, () => {
 
     state = setOperator({ state, operator: "=" });
     assert.deepEqual(display(state), "0");
+  });
+
+  test("0/0 shows 'Not a number' and consecutive operations keep showing 'Not a number'", () => {
+    state = setOperator({ state, operator: "/" });
+    state = appendNumber({ state, numberStr: "0" });
+    state = setOperator({ state, operator: "+" });
+    assert.deepEqual(display(state), "Not a number");
+
+    state = appendNumber({ state, numberStr: "1" });
+    assert.deepEqual(display(state), "1");
+
+    state = setOperator({ state, operator: "=" });
+    assert.deepEqual(display(state), "Not a number");
   });
 });

@@ -159,7 +159,7 @@ export function calculate(state) {
   );
 
   if (Number.isNaN(firstOperand) || Number.isNaN(secondOperand)) {
-    return state;
+    return { firstOperand: "Not a number" };
   }
 
   switch (state.operator) {
@@ -186,6 +186,10 @@ export function calculate(state) {
   function format(number) {
     if (number === Infinity) {
       return "Infinity";
+    }
+
+    if (Number.isNaN(number)) {
+      return "Not a number";
     }
 
     const formattedNumber = new Intl.NumberFormat("de")
