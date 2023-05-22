@@ -128,9 +128,12 @@ export function setOperator({
   state: { firstOperand, secondOperand, operator },
   operator: newOperator,
 }) {
-  let newState;
+  /**
+   * @type CalculatorState
+   */
+  let newState = { firstOperand, secondOperand, operator };
 
-  if (operator || operator === "=") {
+  if ((operator && secondOperand) || operator === "=") {
     newState = calculate({
       firstOperand: firstOperand ?? "0",
       secondOperand,

@@ -611,6 +611,31 @@ describe("integration", { concurrency: true }, () => {
     assert.deepEqual(display(state), "-4");
   });
 
+  test("inputting only operators should not break the calculator", () => {
+    state = {};
+    state = setOperator({ state, operator: "/" });
+    assert.deepEqual(display(state), "0");
+    state = setOperator({ state, operator: "*" });
+    assert.deepEqual(display(state), "0");
+
+    state = setOperator({ state, operator: "+" });
+    state = appendNumber({ state, numberStr: "1" });
+    assert.deepEqual(display(state), "1");
+    state = setOperator({ state, operator: "-" });
+    assert.deepEqual(display(state), "1");
+    state = setOperator({ state, operator: "*" });
+    assert.deepEqual(display(state), "1");
+    state = setOperator({ state, operator: "/" });
+    assert.deepEqual(display(state), "1");
+    state = setOperator({ state, operator: "+" });
+    assert.deepEqual(display(state), "1");
+
+    state = appendNumber({ state, numberStr: "2" });
+    assert.deepEqual(display(state), "2");
+    state = setOperator({ state, operator: "=" });
+    assert.deepEqual(display(state), "3");
+  });
+
   test("adds two positive integers and use the equal operator", () => {
     state = {};
     state = appendNumber({ state, numberStr: "1" });
