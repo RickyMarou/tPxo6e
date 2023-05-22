@@ -2,11 +2,13 @@ import {
   appendNumber,
   display,
   deleteNumber,
+  appendDecimalSeparator,
   setOperator,
 } from "./calculator.mjs";
 
 const displayContent = document.getElementById("display-content");
 const resetButton = document.getElementById("reset");
+const decimalSeparatorButton = document.getElementById("decimal-separator");
 const numberButtons = document.querySelectorAll("[data-number]");
 const operatorButtons = document.querySelectorAll("[data-operator]");
 
@@ -32,6 +34,11 @@ operatorButtons.forEach((operatorButton) => {
 
 resetButton.addEventListener("click", () => {
   state = {};
+  updateDisplay();
+});
+
+decimalSeparatorButton.addEventListener("click", () => {
+  state = appendDecimalSeparator(state);
   updateDisplay();
 });
 
@@ -108,6 +115,11 @@ document.addEventListener("keydown", (keyboardEvent) => {
       break;
     case "c":
       state = {};
+      updateDisplay();
+      break;
+    case ",":
+    case ".":
+      state = appendDecimalSeparator(state);
       updateDisplay();
       break;
     default:

@@ -46,6 +46,38 @@ export function appendNumber({ state, numberStr }) {
 
 /**
  * @param {CalculatorState} state
+ * @returns {CalculatorState}
+ */
+export function appendDecimalSeparator({
+  firstOperand,
+  secondOperand,
+  operator,
+}) {
+  const newState = {
+    firstOperand,
+    secondOperand,
+    operator,
+  };
+
+  if (firstOperand && operator) {
+    if (secondOperand === "0" || !secondOperand) {
+      newState.secondOperand = "0,";
+    } else if (!secondOperand.includes(",")) {
+      newState.secondOperand += ",";
+    }
+    return newState;
+  }
+
+  if (firstOperand === "0" || !firstOperand) {
+    newState.firstOperand = "0,";
+  } else if (!firstOperand.includes(",")) {
+    newState.firstOperand += ",";
+  }
+  return newState;
+}
+
+/**
+ * @param {CalculatorState} state
  * @returns {string}
  */
 export function display({ firstOperand, secondOperand, operator }) {

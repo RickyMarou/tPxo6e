@@ -1,8 +1,13 @@
 // @ts-check
 
-import { test, describe, beforeEach } from "node:test";
+import { test, describe } from "node:test";
 import assert from "node:assert/strict";
-import { appendNumber, display, deleteNumber } from "./calculator.mjs";
+import {
+  appendNumber,
+  display,
+  deleteNumber,
+  appendDecimalSeparator,
+} from "./calculator.mjs";
 
 describe("calculator.mjs", { concurrency: true }, () => {
   describe("appendNumber", { concurrency: true }, () => {
@@ -92,6 +97,103 @@ describe("calculator.mjs", { concurrency: true }, () => {
           firstOperand: "1",
           secondOperand: "1",
           operator: "+",
+        });
+      });
+    });
+  });
+
+  describe("appendDecimalSeparator", { concurrency: true }, () => {
+    describe(
+      "when operator and secondOperand are undefined",
+      { concurrency: true },
+      () => {
+        test("if the firstOperand is 0 or undefined, it should now be '0,'", () => {
+          const newState = appendDecimalSeparator({});
+          assert.deepStrictEqual(newState, {
+            firstOperand: "0,",
+            secondOperand: undefined,
+            operator: undefined,
+          });
+
+          assert.deepStrictEqual(
+            appendDecimalSeparator({ firstOperand: "0" }),
+            {
+              firstOperand: "0,",
+              secondOperand: undefined,
+              operator: undefined,
+            }
+          );
+        });
+
+        test("adds a ',' to the first operand", () => {
+          const newState = appendDecimalSeparator({ firstOperand: "123" });
+          assert.deepStrictEqual(newState, {
+            firstOperand: "123,",
+            secondOperand: undefined,
+            operator: undefined,
+          });
+        });
+
+        test("does not add a ',' to the first operand if already contains one", () => {
+          const newState = appendDecimalSeparator({ firstOperand: "123," });
+          assert.deepStrictEqual(newState, {
+            firstOperand: "123,",
+            secondOperand: undefined,
+            operator: undefined,
+          });
+        });
+      }
+    );
+
+    describe("when operator is defined", { concurrency: true }, () => {
+      test("if the secondOperand is 0 or undefined, it should now be '0,'", () => {
+        const newState = appendDecimalSeparator({
+          firstOperand: "123",
+          operator: "+",
+        });
+        assert.deepStrictEqual(newState, {
+          firstOperand: "123",
+          secondOperand: "0,",
+          operator: "+",
+        });
+
+        assert.deepStrictEqual(
+          appendDecimalSeparator({
+            firstOperand: "123",
+            operator: "*",
+            secondOperand: "0",
+          }),
+          {
+            firstOperand: "123",
+            secondOperand: "0,",
+            operator: "*",
+          }
+        );
+      });
+
+      test("adds a ',' to the second operand", () => {
+        const newState = appendDecimalSeparator({
+          firstOperand: "123",
+          secondOperand: "123",
+          operator: "*",
+        });
+        assert.deepStrictEqual(newState, {
+          firstOperand: "123",
+          secondOperand: "123,",
+          operator: "*",
+        });
+      });
+
+      test("does not add a ',' to secondOperand if already contains one", () => {
+        const newState = appendDecimalSeparator({
+          firstOperand: "123",
+          operator: "*",
+          secondOperand: "123,",
+        });
+        assert.deepStrictEqual(newState, {
+          firstOperand: "123",
+          secondOperand: "123,",
+          operator: "*",
         });
       });
     });
