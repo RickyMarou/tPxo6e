@@ -600,6 +600,7 @@ describe("integration", { concurrency: true }, () => {
   let state = {};
 
   test("allows setting an initial negative operand", () => {
+    state = {};
     state = setOperator({ state, operator: "-" });
     assert.deepEqual(display(state), "0");
 
@@ -674,6 +675,7 @@ describe("integration", { concurrency: true }, () => {
   });
 
   test("0/0 shows 'Not a number' and consecutive operations keep showing 'Not a number'", () => {
+    state = {};
     state = setOperator({ state, operator: "/" });
     state = appendNumber({ state, numberStr: "0" });
     state = setOperator({ state, operator: "+" });
