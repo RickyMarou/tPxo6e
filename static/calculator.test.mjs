@@ -712,4 +712,54 @@ describe("integration", { concurrency: true }, () => {
     state = setOperator({ state, operator: "=" });
     assert.deepEqual(display(state), "Not a number");
   });
+
+  test("delete number does not delete a number when the calculator an operator is selected or a result is displayed", () => {
+    state = {};
+    state = appendNumber({ state, numberStr: "1" });
+    state = appendNumber({ state, numberStr: "2" });
+    state = appendNumber({ state, numberStr: "3" });
+    assert.deepEqual(display(state), "123");
+    state = setOperator({ state, operator: "+" });
+    assert.deepEqual(display(state), "123");
+    state = deleteNumber(state);
+    assert.deepEqual(display(state), "123");
+
+    state = appendNumber({ state, numberStr: "4" });
+    state = appendNumber({ state, numberStr: "5" });
+    state = appendNumber({ state, numberStr: "6" });
+    assert.deepEqual(display(state), "456");
+
+    state = deleteNumber(state);
+    assert.deepEqual(display(state), "45");
+
+    state = setOperator({ state, operator: "=" });
+    assert.deepEqual(display(state), "168");
+    state = deleteNumber(state);
+    assert.deepEqual(display(state), "168");
+  });
+
+  test(
+    "alternating between 1 and the = operator should always display 1",
+    { skip: true },
+    () => {
+      state = {};
+      state = appendNumber({ state, numberStr: "1" });
+      assert.deepEqual(display(state), "1");
+
+      state = setOperator({ state, operator: "=" });
+      assert.deepEqual(display(state), "1");
+
+      state = appendNumber({ state, numberStr: "1" });
+      assert.deepEqual(display(state), "1");
+
+      state = setOperator({ state, operator: "=" });
+      assert.deepEqual(display(state), "1");
+
+      state = appendNumber({ state, numberStr: "1" });
+      assert.deepEqual(display(state), "1");
+
+      state = setOperator({ state, operator: "=" });
+      assert.deepEqual(display(state), "1");
+    }
+  );
 });

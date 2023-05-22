@@ -99,8 +99,13 @@ export function deleteNumber({ firstOperand, secondOperand, operator }) {
     operator,
   };
 
-  if (operator) {
-    if (secondOperand && secondOperand.length > 1) {
+  if (operator && !secondOperand) {
+    beep();
+    return newState;
+  }
+
+  if (firstOperand && operator && secondOperand) {
+    if (secondOperand.length > 1) {
       newState.secondOperand = secondOperand.slice(0, -1);
     } else {
       newState.secondOperand = undefined;
@@ -207,4 +212,21 @@ export function calculate(state) {
 
     return formattedNumber;
   }
+}
+
+function beep() {
+  if (typeof window === "undefined") {
+    console.log("BEEP");
+    return;
+  }
+
+  const context = new AudioContext();
+  const oscillator = context.createOscillator();
+  oscillator.type = "sine";
+  oscillator.frequency.value = 400;
+  oscillator.connect(context.destination);
+  oscillator.start();
+  setTimeout(function () {
+    oscillator.stop();
+  }, 100);
 }
