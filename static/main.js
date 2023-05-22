@@ -58,7 +58,7 @@ function handleOperator(operator) {
 function adjustDisplaySize() {
   const contentLength = displayContent.innerText.length;
   if (contentLength <= 8) {
-    displayContent.style.fontSize = undefined;
+    displayContent.style.removeProperty("font-size");
     return;
   }
 
