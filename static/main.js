@@ -69,6 +69,10 @@ function handleDelete() {
 
 function handleOperator(operator) {
   state = setOperator({ state, operator });
+  displayContent.animate([{ opacity: "0" }, { opacity: "1" }], {
+    duration: 150,
+    easing: "ease-out",
+  });
   updateDisplay();
 }
 
