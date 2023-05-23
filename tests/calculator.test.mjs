@@ -9,7 +9,7 @@ import {
   appendDecimalSeparator,
   setOperator,
   calculate,
-} from "./calculator.mjs";
+} from "../static/calculator.mjs";
 
 describe("calculator.mjs", { concurrency: true }, () => {
   describe("appendNumber", { concurrency: true }, () => {
@@ -595,7 +595,7 @@ describe("calculator.mjs", { concurrency: true }, () => {
 
 describe("integration", { concurrency: true }, () => {
   /**
-   * @type {import('./calculator.mjs').CalculatorState}
+   * @type {import('../static/calculator.mjs').CalculatorState}
    */
   let state = {};
 
