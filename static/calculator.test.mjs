@@ -738,28 +738,24 @@ describe("integration", { concurrency: true }, () => {
     assert.deepEqual(display(state), "168");
   });
 
-  test(
-    "alternating between 1 and the = operator should always display 1",
-    { skip: true },
-    () => {
-      state = {};
-      state = appendNumber({ state, numberStr: "1" });
-      assert.deepEqual(display(state), "1");
+  test("alternating between 1 and the = operator should always display 1", () => {
+    state = {};
+    state = appendNumber({ state, numberStr: "1" });
+    assert.deepEqual(display(state), "1");
 
-      state = setOperator({ state, operator: "=" });
-      assert.deepEqual(display(state), "1");
+    state = setOperator({ state, operator: "=" });
+    assert.deepEqual(display(state), "1");
 
-      state = appendNumber({ state, numberStr: "1" });
-      assert.deepEqual(display(state), "1");
+    state = appendNumber({ state, numberStr: "1" });
+    assert.deepEqual(display(state), "1");
 
-      state = setOperator({ state, operator: "=" });
-      assert.deepEqual(display(state), "1");
+    state = setOperator({ state, operator: "=" });
+    assert.deepEqual(display(state), "1");
 
-      state = appendNumber({ state, numberStr: "1" });
-      assert.deepEqual(display(state), "1");
+    state = appendNumber({ state, numberStr: "1" });
+    assert.deepEqual(display(state), "1");
 
-      state = setOperator({ state, operator: "=" });
-      assert.deepEqual(display(state), "1");
-    }
-  );
+    state = setOperator({ state, operator: "=" });
+    assert.deepEqual(display(state), "1");
+  });
 });

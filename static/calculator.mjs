@@ -187,6 +187,10 @@ export function calculate(state) {
       return {
         firstOperand: format(firstOperand / secondOperand),
       };
+    case "=":
+      return {
+        firstOperand: format(firstOperand),
+      };
     default:
       return state;
   }
