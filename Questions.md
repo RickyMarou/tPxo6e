@@ -29,7 +29,7 @@ app was processing.
 ### What was the most problematic web platform limitation that you have encountered while doing Web development? And how did you resolve it?
 
 To be honest I never had to work on features or apps where web platform limitations were a big blocker.
-I do monitor very closely upcoming platform features and the general state, so I am usually able to
+I do monitor very closely upcoming platform features and its general state, so I am usually able to
 tell ahead of time if a feature or app will be problematic to implement because of platform limitations.
 Also, the web platform today is very capable!  
 
@@ -50,7 +50,7 @@ I'll be honest, after many years of diving deep in React, I'm looking forward fo
 Over the career of a software developer, we spend a lot of time learning framework specific knowledge
 that will eventually turn out to be useless, and this is eventually every frontend framework destiny's.  
 
-Declarative shadow fixes a major flaw of web components: they cannot be rendered on the server.  
+Declarative shadow dom fixes a major flaw of web components: they cannot be rendered on the server.  
 It's also a much nicer experience to author and read HTML as HTML rather than using imperative javascript declarations (`createElement`, `appendChild`, etc...).  
 
 Even if web components take over the mind share of frontend developers, there will always be frameworks,
@@ -58,7 +58,7 @@ but hopefully there will be very little framework specific knowledge in them. We
 
 ### Which HTML, CSS and JavaScript features would you like to see introduced or removed in future revisions of the standards and why?
 
-I feel like I should answer: "I wish for [manifest-v3](https://developer.chrome.com/docs/extensions/mv3/intro/) to be canned 😅".  
+I feel like I should answer: "I wish for [manifest-v3](https://developer.chrome.com/docs/extensions/mv3/intro/) to be trashed" 😅.  
 
 On a more personal note, I would love to see JSX become a part of the platform.
 When I first came across JSX, like many other people, I had an allergic reaction and thought that facebook developers had lost their minds.  
